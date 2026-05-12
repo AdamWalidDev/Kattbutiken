@@ -33,16 +33,17 @@ main{
 .cat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap:20px;
-    margin: 200px;
+    gap: 20px;
+    margin: 40px auto;
+    max-width: 1000px;
 }
 
-.cat-grid {
+.cat-card {
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 8px;
     text-align: center;
-
+    background: #fafafa;
 }
 
 .pagination {
@@ -51,4 +52,31 @@ main{
     justify-content: center;
     gap: 15px;
     align-items: center;
+}
+
+.cart-list {
+    list-style: none;
+    padding: 0;
+
+}
+
+.cart-list li {
+    background:#f4f4f4;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-form {
+    margin-top: 30px;
+    border-top: 2px solid #333;
+    padding-top: 20px;
+}
+
+.order-form input {
+    margin-bottom: 10px;
+    padding:8px;
+    width: 100%;
+    max-width: 300px;
 }

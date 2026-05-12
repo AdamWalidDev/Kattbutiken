@@ -14,8 +14,57 @@ const showAbout = () => {
     <p>Adress: Kattgränd 1, Mjau-stad.</p>`;
 };
 
-const showCart = () => { contentDiv.innerHTML = '<h1>Din Kundvagn</h1>'; };
+//const showCart = () => { contentDiv.innerHTML = '<h1>Din Kundvagn</h1>'; };
+const showCart = () => {
+    if (cart.length === 0) {
+        contentDiv.innerHTML = '<h1>Din Kundvagn</h1><p>Kundvagnen är tom.</p>';
+        return;
+    }
 
+    let html = '<h1>Din Kundvagn</h1><ul class="cart-lis">';
+
+    cart.forEach((item, index) => {
+        html += `
+            <li>
+                <strong>${item.name}</strong> - 1000 kr
+                <button onclick="removeFromCart(${index})"> Ta bort</button>
+            </li>`;
+    });
+
+    html += '</ul>';
+
+    // Lägg till ett beställningsformulär
+
+    html += `
+        <div class="order-form">
+            <h2>Slutför din beställning<h2>
+            <form id="checkout-form">
+                <input type="text" id="name" placeholder="Ditt namn" required><br>
+                <iput type="email" id="email" placeholder="Din e-post" required><br>
+                <button type="submit">Skicka beställning</button>
+            </form>
+        </div>
+        `;
+
+    contentDiv.innerHTML = html;
+
+    // Hantera formulärets inskickning
+
+    document.getElementById('checkout-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').ariaValueMax;
+        alert(`Tack för din beställning, ${name}! Vi skickar dina katter snart.`);
+        cart = [];
+        showHome(); //gå tillbaka
+
+    });
+};
+
+//Möjlighet att ta bort från kundvagnen
+window.removeFromCart = (index) => {
+    cart.slice(index, 1);
+    showCart();
+};
 // FLYTTAD HIT: showCats måste finnas innan EventListeners körs
 const showCats = () => {
     contentDiv.innerHTML = '<h1>Våra Katter</h1><p>Laddar katter...</p>';
@@ -59,6 +108,7 @@ function renderCatList() {
                 <img src="${imageUrl}" alt ="${cat.name}" style="width:100%; max-height:200px; object-fit:cover;">
                 <h3>${cat.name}</h3>
                 <p><strong>Ursprung:</strong> ${cat.origin}</p>
+                <button onclick="addToCart('${cat.id}')">Köp</button>
             </div>
         `;
     });
@@ -79,6 +129,16 @@ window.changePage = (direction) => {
     currentPage += direction;
     renderCatList();
 };
+
+let cart = [];
+
+window.addToCart = (catId) => {
+    const selectedCat = allBreeds.find(cat => cat.id === catId);
+    cart.push(selectedCat);
+    alert(`${selectedCat.name} har lagts till i kundvagn!`);
+};
+
+
 
 // Starta hemvyn
 showHome();
