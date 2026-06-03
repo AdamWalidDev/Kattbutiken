@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katter - Kattbutiken</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="content"></div>
+    <script src="script.js"></script>
+    <script>
+      // Kör showCats automatiskt när sidan laddas
+      window.addEventListener('DOMContentLoaded', function() {
+        if (typeof showCats === 'function') showCats();
+      });
+    </script>
+</body>
+</html>
