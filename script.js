@@ -186,13 +186,18 @@ function renderCatList() {
 
     let html = '<div class="cat-grid">';
     catsToShow.forEach(cat => {
-        let imageUrl = 'https://via.placeholder.com/200x200?text=No+Image';
+        const fallbackImage = 'cat-fallback.svg';
+        let imageUrl = fallbackImage;
+
         if (cat.image && cat.image.url) {
             imageUrl = cat.image.url;
+        } else if (cat.reference_image_id) {
+            imageUrl = `https://cdn2.thecatapi.com/images/${cat.reference_image_id}.jpg`;
         }
+
         html += `
             <div class="cat-card">
-                <img src="${imageUrl}" alt ="${cat.name}" style="width:100%; max-height:200px; object-fit:cover;">
+                <img src="${imageUrl}" alt ="${cat.name}" style="width:100%; max-height:200px; object-fit:cover;" onerror="this.onerror=null;this.src='cat-fallback.svg';">
                 <h3>${cat.name}</h3>
                 <p><strong>Ursprung:</strong> ${cat.origin}</p>
                 <button onclick="addToCart('${cat.id}')">Köp</button>
